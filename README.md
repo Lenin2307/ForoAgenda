@@ -24,6 +24,7 @@ Incluye medidas de seguridad como encriptación de contraseñas (`password_hash`
 * **PHP** versión 8.0 o superior.
 * **MySQL / MariaDB** activo (configurado en el puerto `3307`, modificable en `conexion.php`).
 * **Navegador web** actualizado (Google Chrome, Microsoft Edge, Mozilla Firefox, etc.).
+* **Descomprimir el archivo y abrirlo en VS studio o Antigravity ID**
 
 ---
 
