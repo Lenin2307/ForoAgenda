@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario | Agenda de Contactos</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>Crear Cuenta</h2>
+            <p>Completa tus datos para registrarte</p>
+        </div>
+
+        <form id="formRegistro" action="guardar_usuario.php" method="POST">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Tu nombre" required>
+            </div>
+
+            <div class="form-group">
+                <label for="apellidos">Apellidos</label>
+                <input type="text" name="apellidos" id="apellidos" class="form-control" placeholder="Tus apellidos"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="correo">Correo electrónico</label>
+                <input type="email" name="correo" id="correo" class="form-control" placeholder="ejemplo@correo.com"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="clave">Contraseña</label>
+                <input type="password" name="clave" id="clave" class="form-control" placeholder="Mínimo 8 caracteres"
+                    minlength="8" maxlength="20" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmar_clave">Repetir contraseña</label>
+                <input type="password" name="confirmar_clave" id="confirmar_clave" class="form-control"
+                    placeholder="Vuelve a escribir tu contraseña" minlength="8" maxlength="20" required>
+                <span id="mensajeError" class="error-text">Las contraseñas no coinciden.</span>
+                <span id="mensajeOk" class="success-text">Las contraseñas coinciden.</span>
+            </div>
+
+            <button type="submit" class="btn-submit">Registrar Usuario</button>
+        </form>
+
+        <div class="auth-link">
+            ¿Ya tienes cuenta? <a href="login.php">Inicia sesión</a>
+        </div>
+    </div>
+
+    <script>
+        const formulario = document.getElementById('formRegistro');
+        const clave = document.getElementById('clave');
+        const confirmarClave = document.getElementById('confirmar_clave');
+        const mensajeError = document.getElementById('mensajeError');
+        const mensajeOk = document.getElementById('mensajeOk');
+
+        function validarCoincidencia() {
+            if (confirmarClave.value === "") {
+                mensajeError.style.display = 'none';
+                mensajeOk.style.display = 'none';
+                confirmarClave.style.borderColor = '#dce1e7';
+                return false;
+            }
+
+            if (clave.value !== confirmarClave.value) {
+                mensajeError.style.display = 'block';
+                mensajeOk.style.display = 'none';
+                confirmarClave.style.borderColor = '#d63031';
+                return false;
+            } else {
+                mensajeError.style.display = 'none';
+                mensajeOk.style.display = 'block';
+                confirmarClave.style.borderColor = '#198754';
+                return true;
+            }
+        }
+
+        // Validar en vivo mientras se escribe en cualquiera de los dos campos
+        clave.addEventListener('input', validarCoincidencia);
+        confirmarClave.addEventListener('input', validarCoincidencia);
+
+        // Bloquear envío si no coinciden
+        formulario.addEventListener('submit', function (evento) {
+            if (!validarCoincidencia()) {
+                evento.preventDefault();
+                mensajeError.style.display = 'block';
+                confirmarClave.focus();
+            }
+        });
+    </script>
+
+</body>
+
+</html>
