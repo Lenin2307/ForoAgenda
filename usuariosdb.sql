@@ -34,6 +34,7 @@ CREATE TABLE `contactos` (
   `telefono` varchar(20) NOT NULL,
   `correo` varchar(100) NOT NULL,
   `ciudad` varchar(100) NOT NULL
+  'fecha_creacion' TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
