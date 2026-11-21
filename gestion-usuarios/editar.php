@@ -1,6 +1,14 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario_id'])) {
+$tiempo_maximo = 30;
+if (isset($_SESSION['ultimo_acceso']) && (time() - $_SESSION['ultimo_acceso']) > $tiempo_maximo) {
+    session_unset();
+    session_destroy();
+    header("Location: login.php?motivo=inactividad");
+    exit;
+}
+$_SESSION['ultimo_acceso'] = time();
     header("Location: login.php");
     exit;
 }
@@ -60,6 +68,14 @@ if (!isset($contacto)) {
             <div class="form-group">
                 <label for="ciudad">Ciudad</label>
                 <input type="text" id="ciudad" name="ciudad" class="form-control" value="<?= htmlspecialchars($contacto['ciudad'], ENT_QUOTES, 'UTF-8') ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="favorito">Favorito</label>
+                <select id="favorito" name="favorito" class="form-control">
+                    <option value="0" <?= empty($contacto['favorito']) ? 'selected' : '' ?>>No</option>
+                    <option value="1" <?= !empty($contacto['favorito']) ? 'selected' : '' ?>>Sí</option>
+                </select>
             </div>
 
             <button type="submit" class="btn-submit">Guardar Cambios</button>
