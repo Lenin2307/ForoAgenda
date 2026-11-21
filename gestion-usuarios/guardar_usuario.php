@@ -4,9 +4,21 @@ require_once("conexion.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = trim($_POST['nombre']); 
     $apellidos = trim($_POST['apellidos']); 
-    $correo = filter_var(trim($_POST['correo']), FILTER_SANITIZE_EMAIL); 
+    $correo = trim($_POST['correo'] ??'');
     $clave_plana = $_POST['clave'];
     $confirmar_clave = $_POST['confirmar_clave'];
+
+    if ($nombre === '' || $apellidos === '' || $correo === '' || trim($clave_plana) === '' || trim($confirmar_clave) === '') {
+        echo "<p style='text-align:center; color:red; margin-top:20px;'>Error: Todos los campos son obligatorios.</p>";
+        echo "<p style='text-align:center;'><a href='registro_usuario.html'>Volver al formulario</a></p>";
+        exit;
+    }
+
+    if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+        echo "<p style='text-align:center; color:red; margin-top:20px;'>Error: El formato del correo electrónico no es válido.</p>";
+        echo "<p style='text-align:center;'><a href='registro_usuario.html'>Volver al formulario</a></p>";
+        exit;
+    }
 
     if ($clave_plana !== $confirmar_clave) {
         echo "<p style='text-align:center; color:red; margin-top:20px;'>Error: Las contraseñas no coinciden.</p>";
