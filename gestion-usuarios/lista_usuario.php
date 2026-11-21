@@ -2,6 +2,14 @@
 session_start();
 
 if (!isset($_SESSION['usuario_id'])) {
+$tiempo_maximo = 30;
+if (isset($_SESSION['ultimo_acceso']) && (time() - $_SESSION['ultimo_acceso']) > $tiempo_maximo) {
+    session_unset();
+    session_destroy();
+    header("Location: login.php?motivo=inactividad");
+    exit;
+}
+$_SESSION['ultimo_acceso'] = time();
     header("Location: login.php");
     exit;
 }
@@ -130,7 +138,7 @@ $resultado = $stmt->get_result();
                     style="flex: 1; min-width: 220px; padding: 10px; border: 1px solid #ccc; border-radius: 6px;"
                 >
 
-                <select name="orden" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                <select name="orden" onchange="this.form.submit()" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px; cursor: pointer;">
                     <option value="fecha_desc" <?= $orden === 'fecha_desc' ? 'selected' : '' ?>>Más recientes primero</option>
                     <option value="fecha_asc" <?= $orden === 'fecha_asc' ? 'selected' : '' ?>>Más antiguos primero</option>
                     <option value="nombre_asc" <?= $orden === 'nombre_asc' ? 'selected' : '' ?>>Nombre (A - Z)</option>
