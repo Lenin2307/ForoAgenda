@@ -6,14 +6,26 @@ if (!isset($_SESSION['usuario_id'])) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    require_once("conexion.php");
-
-    $id = intval($_POST['id']);
+    $id = intval($_POST['id'] ?? 0);
     $id_usuario = $_SESSION['usuario_id'];
-    $nombre = trim($_POST['nombre']); 
-    $telefono = trim($_POST['telefono']); 
-    $correo = filter_var(trim($_POST['correo']), FILTER_SANITIZE_EMAIL); 
-    $ciudad = trim($_POST['ciudad']); 
+    $nombre = trim($_POST['nombre'] ?? '');
+    $telefono = trim($_POST['telefono'] ?? '');
+    $correo = trim($_POST['correo'] ?? '');
+    $ciudad = trim($_POST['ciudad'] ?? '');
+
+    if ($id <= 0 || $nombre === '' || $telefono === '' || $correo === '' || $ciudad === '') {
+        echo "<p style='text-align:center; color:red; margin-top:20px;'>Error: Todos los campos son obligatorios.</p>";
+        echo "<p style='text-align:center;'><a href='editar.php?id=" . $id . "'>Volver al formulario de edición</a></p>";
+        exit;
+    }
+
+    if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+        echo "<p style='text-align:center; color:red; margin-top:20px;'>Error: El formato del correo electrónico no es válido.</p>";
+        echo "<p style='text-align:center;'><a href='editar.php?id=" . $id . "'>Volver al formulario de edición</a></p>";
+        exit;
+    }
+
+    require_once("conexion.php");
 
     $stmt = $conexion->prepare("UPDATE contactos SET nombre = ?, telefono = ?, correo = ?, ciudad = ? WHERE id = ? AND id_usuario = ?");
     $stmt->bind_param("ssssii", $nombre, $telefono, $correo, $ciudad, $id, $id_usuario);
