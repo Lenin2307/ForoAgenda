@@ -6,6 +6,13 @@ if (!isset($_SESSION['usuario_id'])) {
     exit;
 }
 
+$correo_admin = 'lxjaramillo@gmail.com';
+
+if (!isset($_SESSION['usuario_correo']) || strtolower(trim($_SESSION['usuario_correo'])) !== strtolower($correo_admin)) {
+    header("Location: lista_usuario.php");
+    exit;
+}
+
 require_once("conexion.php");
 
 $sql = "SELECT id, nombre, apellidos, correo, fecha_registro FROM usuarios ORDER BY id ASC";
