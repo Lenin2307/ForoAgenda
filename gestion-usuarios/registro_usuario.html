@@ -84,11 +84,10 @@
             }
         }
 
-        // Validar en vivo mientras se escribe en cualquiera de los dos campos
         clave.addEventListener('input', validarCoincidencia);
         confirmarClave.addEventListener('input', validarCoincidencia);
 
-        // Bloquear envío si no coinciden
+
         formulario.addEventListener('submit', function (evento) {
             if (!validarCoincidencia()) {
                 evento.preventDefault();
