@@ -61,7 +61,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
             </div>
         <?php endif; ?>
-
+        
+        <?php if (isset($_GET['motivo']) && $_GET['motivo'] === 'inactividad'): ?>
+    <div class="alert-error">
+        Tu sesión se cerró automáticamente tras 30 segundos de inactividad.
+    </div>
+<?php endif; ?>
         <form action="login.php" method="POST">
             <div class="form-group">
                 <label for="correo">Correo electrónico</label>

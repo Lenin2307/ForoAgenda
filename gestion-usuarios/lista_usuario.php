@@ -197,6 +197,7 @@ $resultado = $stmt->get_result();
 
         </div>
     </div>
+    <script src="inactividad.js"></script>
 
 </body>
 </html>

@@ -2,6 +2,14 @@
 session_start();
 
 if (!isset($_SESSION['usuario_id'])) {
+$tiempo_maximo = 30;
+if (isset($_SESSION['ultimo_acceso']) && (time() - $_SESSION['ultimo_acceso']) > $tiempo_maximo) {
+    session_unset();
+    session_destroy();
+    header("Location: login.php?motivo=inactividad");
+    exit;
+}
+$_SESSION['ultimo_acceso'] = time();
     header("Location: login.php");
     exit;
 }
@@ -79,6 +87,7 @@ $resultado = $conexion->query($sql);
 
         </div>
     </div>
+    <script src="inactividad.js"></script>
 
 </body>
 </html>

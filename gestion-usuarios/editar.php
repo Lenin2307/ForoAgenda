@@ -69,6 +69,7 @@ if (!isset($contacto)) {
             <a href="lista_usuario.php">Cancelar y volver a la agenda</a>
         </div>
     </div>
+    <script src="inactividad.js"></script>
 
 </body>
 </html>
