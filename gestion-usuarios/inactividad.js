@@ -1,18 +1,17 @@
-let temporizadorInactividad;
-const TIEMPO_LIMITE = 30000;
+let tiempoInactividad;
+const LIMITE_INACTIVIDAD = 30000;
 
-function cerrarPorInactividad() {
-    window.location.href = "logout.php?motivo=inactividad";
+function cerrarSesionPorInactividad() {
+    window.location.href = "logout.php";
 }
 
 function reiniciarTemporizador() {
-    clearTimeout(temporizadorInactividad);
-    temporizadorInactividad = setTimeout(cerrarPorInactividad, TIEMPO_LIMITE);
+    clearTimeout(tiempoInactividad);
+    tiempoInactividad = setTimeout(cerrarSesionPorInactividad, LIMITE_INACTIVIDAD);
 }
 
-const eventosActividad = ["mousemove", "mousedown", "keydown", "scroll", "touchstart", "click"];
-eventosActividad.forEach(evento => {
-    document.addEventListener(evento, reiniciarTemporizador, true);
+["keydown", "keyup", "input", "mousemove", "mousedown", "click", "scroll", "touchstart"].forEach((evento) => {
+    window.addEventListener(evento, reiniciarTemporizador, true);
 });
 
 reiniciarTemporizador();
