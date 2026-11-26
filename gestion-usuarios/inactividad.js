@@ -1,5 +1,5 @@
 let tiempoInactividad;
-const LIMITE_INACTIVIDAD = 30000;
+const LIMITE_INACTIVIDAD = 90000;
 
 function cerrarSesionPorInactividad() {
     window.location.href = "logout.php";

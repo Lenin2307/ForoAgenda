@@ -150,7 +150,6 @@ body {
     display: none;
 }
 
-/* --- ESTILOS PARA LISTA DE USUARIOS (TABLA) --- */
 .container-tabla {
     width: 100%;
     max-width: 900px;
@@ -227,7 +226,7 @@ body {
     text-align: center !important;
 }
 
-/* Botones de acción */
+
 .btn-action {
     display: inline-block;
     padding: 7px 14px;
